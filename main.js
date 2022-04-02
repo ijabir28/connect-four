@@ -1,8 +1,7 @@
 const mock_moves = [1, 2, 3, 4, 5, 6];
 
-
 function new_board() {
-    return Array.from({length: 6}, () => Array(7).fill(0));
+    return Array.from({length: 6}, () => Array(7).fill(undefined));
 }
 
 function take_move_from_player() {
