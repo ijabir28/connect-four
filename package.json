@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "type": "module",
   "scripts": {
     "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/ijabir28/connect-four/issues"
   },
-  "homepage": "https://github.com/ijabir28/connect-four#readme"
+  "homepage": "https://github.com/ijabir28/connect-four#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
 }
