@@ -23,4 +23,16 @@ function is_game_over(board) {
     );
 }
 
-module.exports = {is_game_over};
+function place_move(board, player_no, col_index) {
+    let row_index = 5;
+    while(0 <= row_index && board[row_index][col_index] !== undefined) {
+        row_index -= 1;
+    }
+
+    if(row_index < 0) {
+        throw 'Invalid Move';
+    }
+    board[row_index][col_index] = player_no;
+}
+
+module.exports = {is_game_over, place_move};
