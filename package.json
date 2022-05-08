@@ -20,5 +20,8 @@
   "homepage": "https://github.com/ijabir28/connect-four#readme",
   "devDependencies": {
     "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "process": "^0.11.10"
   }
 }

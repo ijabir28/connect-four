@@ -1,34 +1,29 @@
 const {is_game_over, place_move} = require("./game.js");
 
-const mock_moves = [
-    [6, 2, 3, 2, 1, 1, 0],
-    [6, 5, 4, 2, 3, 3, 3]
-];
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 function new_board() {
     return Array.from({length: 6}, () => Array(7).fill(undefined));
 }
 
 function take_move_from_player(player_no) {
-    return mock_moves[player_no].pop();
-}
+    return new Promise(resolve => {
+        readline.question(`Player ${player_no}: `, resolve);
+    });}
 
-let player_no = 0;
-
-function start_game() {
+async function start_game() {
     console.log('Game start....');
     const board = new_board();
-    console.table(board);
+    let player_no = 0;
 
-    while (0 < mock_moves[0].length || 0 < mock_moves[1].length) {
+    while (!is_game_over(board)) {
         try {
-            const move = take_move_from_player(player_no);
-            place_move(board, player_no, move);
             console.table(board);
-            if(is_game_over(board)) {
-                console.log("Player ", player_no, " wins !!!");
-                break;
-            }
+            const move = await take_move_from_player(player_no);
+            place_move(board, player_no, move);
             player_no = (player_no + 1) % 2;
         } catch (e) {
             console.error(e);
@@ -36,4 +31,6 @@ function start_game() {
     }
 }
 
-start_game()
+start_game().then(function () {
+    console.log('Game Over');
+})

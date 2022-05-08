@@ -1,4 +1,5 @@
-const {is_game_over, place_move} = require("./game.js");
+const {is_game_over, place_move, fill_up} = require("./game.js");
+const {is_valid_in_board} = require("./game");
 
 describe('game_over', function () {
     it('should be correct', function () {
@@ -538,4 +539,66 @@ describe('place_move', function () {
             expect(current_board).toStrictEqual(next_board);
         });
     });
-})
+});
+
+describe('fill_up', function () {
+    it('should be correct', function () {
+        expect(fill_up([
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+        ])).toBe(false);
+
+        expect(fill_up([
+            [0 , 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ])).toBe(true);
+
+        expect(fill_up([
+            [0 , 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ])).toBe(true);
+
+        expect(fill_up([
+            [1 , 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ])).toBe(true);
+
+        expect(fill_up([
+            [0 , 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, undefined, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ])).toBe(false);
+    });
+});
+
+describe('is_valid_in_board', function () {
+    it('should be correct', function () {
+        expect(is_valid_in_board(0, 0, [
+            [0 , 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ])).toBe(false)
+    });
+});
