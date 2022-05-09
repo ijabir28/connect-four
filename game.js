@@ -1,5 +1,12 @@
 const {range} = require("./util");
 
+const game_status = {
+    player_zero_winner: 0,
+    player_one_winner: 1,
+    draw: 2,
+    playing: 3
+}
+
 function is_valid_in_board(row_index, col_index, board) {
     return range(0, row_index).every(r => board[r][col_index] !== undefined);
 }
@@ -52,6 +59,18 @@ function is_game_over(board) {
     return is_winner(board, 0) || is_winner(board, 1) || fill_up(board);
 }
 
+function game_result(board) {
+    if(is_winner(board, 0)){ 
+        return game_status.player_zero_winner;
+    } else if(is_winner(board, 1)) {
+        return game_status.player_one_winner;
+    } else if(fill_up(board)) {
+        return game_status.draw;
+    } else {
+        return game_status.playing;
+    }
+}
+
 function place_move(board, player_no, col_index) {
     if(!is_valid_col_range(col_index)) {
         throw 'Invalid Move';
@@ -68,4 +87,4 @@ function place_move(board, player_no, col_index) {
     board[row_index][col_index] = player_no;
 }
 
-module.exports = {is_game_over, place_move, fill_up, is_valid_in_board};
+module.exports = {is_game_over, place_move, fill_up, is_valid_in_board, game_result};
