@@ -49,7 +49,6 @@ function fill_up(board) {
 }
 
 function is_game_over(board) {
-    console.log(board);
     return is_winner(board, 0) || is_winner(board, 1) || fill_up(board);
 }
 
