@@ -348,7 +348,7 @@ describe('game_over', function () {
         ].forEach(function ({board, result}) {
             expect(is_game_over(board)).toBe(result);
         })
-    });
+    })
 });
 
 describe('place_move', function () {
@@ -593,12 +593,12 @@ describe('fill_up', function () {
 describe('is_valid_in_board', function () {
     it('should be correct', function () {
         expect(is_valid_in_board(0, 0, [
-            [0 , 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-        ])).toBe(false)
+        ])).toBe(true)
     });
 });
