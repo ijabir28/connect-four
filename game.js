@@ -42,8 +42,7 @@ function is_winner(board, player_no) {
                     offsets.every(offset => (
                         is_valid_range(row_index + offset * row_direction, col_index + offset * col_direction, board) &&
                         board[row_index + offset * row_direction][col_index + offset * col_direction] === player_no
-                    )
-                    )
+                    ))
                 )
             )
         )
@@ -89,7 +88,25 @@ function place_move(board, player_no, col_index) {
     board[row_index][col_index] = player_no;
 }
 
-function undo_move(board, move) {
+function place_move_next_board(board, player_no, col_index) {
+    if (!is_valid_col_range(col_index)) {
+        throw 'Invalid Move';
+    }
+
+    let row_index = 5;
+    while (0 <= row_index && board[row_index][col_index] !== undefined) {
+        row_index -= 1;
+    }
+
+    if (row_index < 0) {
+        throw 'Invalid Move';
+    }
+    board = copy_board(board);
+    board[row_index][col_index] = player_no;
+    return board;
+}
+
+function undo_move(board, col_index) {
     if (!is_valid_col_range(col_index)) {
         throw 'Invalid Column';
     }
@@ -105,4 +122,9 @@ function undo_move(board, move) {
     board[row_index][col_index] = undefined;
 }
 
-module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, undo_move };
+
+function copy_board(board) {
+    return [...board.map(row => [...row])];
+}
+
+module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, undo_move, is_valid_range, place_move_next_board};
