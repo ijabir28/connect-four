@@ -1,4 +1,5 @@
 const { range } = require("./util");
+const {segments, cells} = require("./board");
 
 const game_status = {
     player_zero_winner: 0,
@@ -27,33 +28,16 @@ function is_valid(row_index, col_index, board) {
     return is_valid_range(row_index, col_index) && is_valid_in_board(row_index, col_index, board);
 }
 
+function four_connected(board, segment, player_no) {
+    return segment.every(([row_index, col_index]) => board[row_index][col_index] === player_no);
+}
+
 function is_winner(board, player_no) {
-    const row_indices = [0, 1, 2, 3, 4, 5];
-    const col_indices = [0, 1, 2, 3, 4, 5, 6];
-
-    const direction = [[0, +1], [+1, 0], [+1, +1], [+1, -1]];
-
-    const offsets = [0, 1, 2, 3];
-
-    return (
-        row_indices.some(row_index =>
-            col_indices.some(col_index =>
-                direction.some(([row_direction, col_direction]) =>
-                    offsets.every(offset => (
-                        is_valid_range(row_index + offset * row_direction, col_index + offset * col_direction, board) &&
-                        board[row_index + offset * row_direction][col_index + offset * col_direction] === player_no
-                    ))
-                )
-            )
-        )
-    );
+    return segments.some(segment => four_connected(board, segment, player_no));
 }
 
 function fill_up(board) {
-    const row_indices = [0, 1, 2, 3, 4, 5];
-    const col_indices = [0, 1, 2, 3, 4, 5, 6];
-
-    return row_indices.every(row_index => col_indices.every(col_index => board[row_index][col_index] !== undefined));
+    return cells.every(([row_index, col_index]) => board[row_index][col_index] !== undefined);
 }
 
 function is_game_over(board) {
@@ -122,9 +106,17 @@ function undo_move(board, col_index) {
     board[row_index][col_index] = undefined;
 }
 
-
 function copy_board(board) {
     return [...board.map(row => [...row])];
 }
 
-module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, undo_move, is_valid_range, place_move_next_board};
+function valid_moves(board) {
+    return [0, 1, 2, 3, 4, 5, 6].filter(col_index => board[0][col_index] === undefined);
+}
+
+function opponent(player) {
+    return (player + 1) % 2;
+}
+
+
+module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, place_move_next_board, valid_moves, opponent};

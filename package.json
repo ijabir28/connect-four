@@ -11,7 +11,13 @@
     "type": "git",
     "url": "git+https://github.com/ijabir28/connect-four.git"
   },
-  "keywords": ["game", "connect-four", "ai", "minimax", "alpha-beta-pruning"],
+  "keywords": [
+    "game",
+    "connect-four",
+    "ai",
+    "minimax",
+    "alpha-beta-pruning"
+  ],
   "author": "ijabir28",
   "license": "ISC",
   "bugs": {
