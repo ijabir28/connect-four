@@ -1,12 +1,13 @@
-const {place_move_next_board, is_game_over, valid_moves, opponent} = require("./game");
+const {next_board, is_game_over, valid_moves, opponent} = require("./game");
 const {heuristic} = require('./heuristic');
 
 function move(board, player) {
     let max_score = Number.NEGATIVE_INFINITY;
     let max_move = undefined;
+
     for (const a_move of valid_moves(board)) {
         const a_score = mini_max(
-            place_move_next_board(board, player , a_move),
+            next_board(board, player, a_move),
             3,
             false,
             opponent(player)
@@ -16,15 +17,13 @@ function move(board, player) {
             max_score = a_score;
             max_move = a_move;
         }
-
-
     }
     return max_move;
 }
 
 function mini_max(board, depth, isMaximizingPlayer, player) {
     if (depth === 0 || is_game_over(board)) {
-        return heuristic(board, isMaximizingPlayer? player : opponent(player));
+        return heuristic(board, isMaximizingPlayer ? player : opponent(player));
     }
 
     if (isMaximizingPlayer) {
@@ -33,7 +32,7 @@ function mini_max(board, depth, isMaximizingPlayer, player) {
             value = Math.max(
                 value,
                 mini_max(
-                    place_move_next_board(board, 1, a_move),
+                    next_board(board, player, a_move),
                     depth - 1,
                     false,
                     opponent(player)
@@ -47,7 +46,7 @@ function mini_max(board, depth, isMaximizingPlayer, player) {
             value = Math.min(
                 value,
                 mini_max(
-                    place_move_next_board(board, 0, a_move),
+                    next_board(board, player, a_move),
                     depth - 1,
                     true,
                     opponent(player)

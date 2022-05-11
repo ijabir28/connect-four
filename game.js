@@ -12,20 +12,8 @@ function is_valid_in_board(row_index, col_index, board) {
     return range(0, row_index).every(r => board[r][col_index] !== undefined);
 }
 
-function is_valid_range(row_index, col_index) {
-    return is_valid_row_range(row_index) && is_valid_col_range(col_index);
-}
-
 function is_valid_col_range(col_index) {
     return 0 <= col_index && col_index <= 6;
-}
-
-function is_valid_row_range(row_index) {
-    return 0 <= row_index && row_index <= 5;
-}
-
-function is_valid(row_index, col_index, board) {
-    return is_valid_range(row_index, col_index) && is_valid_in_board(row_index, col_index, board);
 }
 
 function four_connected(board, segment, player_no) {
@@ -72,7 +60,7 @@ function place_move(board, player_no, col_index) {
     board[row_index][col_index] = player_no;
 }
 
-function place_move_next_board(board, player_no, col_index) {
+function next_board(board, player_no, col_index) {
     if (!is_valid_col_range(col_index)) {
         throw 'Invalid Move';
     }
@@ -85,25 +73,10 @@ function place_move_next_board(board, player_no, col_index) {
     if (row_index < 0) {
         throw 'Invalid Move';
     }
+
     board = copy_board(board);
     board[row_index][col_index] = player_no;
     return board;
-}
-
-function undo_move(board, col_index) {
-    if (!is_valid_col_range(col_index)) {
-        throw 'Invalid Column';
-    }
-
-    let row_index = 0;
-    while (row_index < 6 && board[row_index][col_index] === undefined) {
-        row_index += 1;
-    }
-
-    if (6 < row_index) {
-        throw 'Invalid Undo';
-    }
-    board[row_index][col_index] = undefined;
 }
 
 function copy_board(board) {
@@ -119,4 +92,4 @@ function opponent(player) {
 }
 
 
-module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, place_move_next_board, valid_moves, opponent};
+module.exports = { is_game_over, place_move, fill_up, is_valid_in_board, game_result, next_board, valid_moves, opponent};

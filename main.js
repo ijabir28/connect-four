@@ -26,8 +26,7 @@ function copy_board(board) {
 
 async function take_move_from_player(player_no, board) {
     if (player_no === AI_PLAYER) {
-        const x = ai.move(board, AI_PLAYER, HUMAN_PLAYER);
-        return x;
+        return ai.move(board, AI_PLAYER);
     }
 
     return Number.parseInt(await new Promise(resolve => {

@@ -5,11 +5,15 @@ const {opponent} = require("./game");
 const score_by_frequency = [0, 1, 5, 20, Number.POSITIVE_INFINITY];
 
 function heuristic(board, maximizingPlayer) {
-    return heuristic_of(board, maximizingPlayer) - heuristic_of(board, opponent(maximizingPlayer));
+    return single_player_heuristic(board, maximizingPlayer) - single_player_heuristic(board, opponent(maximizingPlayer));
 }
 
-function heuristic_of(board, player) {
-    return segments.reduce((current_sum, segment) => current_sum + score_of_segment(board, segment, player), 0);
+function single_player_heuristic(board, player) {
+    let current_sum = 0;
+    for (const segment of segments) {
+        current_sum += score_of_segment(board, segment, player);
+    }
+    return current_sum;
 }
 
 function score_of_segment(board, segment, player) {
