@@ -2,7 +2,7 @@ const {segments} = require("./board");
 const {opponent} = require("./game");
 
 
-const score_by_frequency = [0, 1, 5, 20, Number.POSITIVE_INFINITY];
+const score_by_frequency = [0, 1, 5, 20, 1000];
 
 function heuristic(board, maximizingPlayer) {
     return single_player_heuristic(board, maximizingPlayer) - single_player_heuristic(board, opponent(maximizingPlayer));
