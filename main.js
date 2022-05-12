@@ -35,7 +35,7 @@ async function take_move_from_player(player_no, board) {
 }
 
 function print_board(board) {
-    console.table(board.map(row => row.map(piece => piece === undefined ? '∅' : piece)));
+    console.table(board.map(row => row.map(piece => piece === undefined ? '∅' : piece === 1 ? 'A' : 'H')));
 }
 
 async function start_game() {
@@ -47,7 +47,7 @@ async function start_game() {
         try {
             print_board(board);
             const move = await take_move_from_player(player_no, copy_board(board));
-            console.log('Move Played: ', move);
+            console.log(`AI's Move: `, move);
             place_move(board, player_no, move);
             player_no = (player_no + 1) % 2;
         } catch (e) {
